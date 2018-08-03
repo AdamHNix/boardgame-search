@@ -1,0 +1,9 @@
+#search{
+    padding: 0.2rem;
+    width: 25rem;
+}
+input {
+border: solid white 0.5px;
+border-radius: 15px;
+background-color: #80ced6;
+}
