@@ -24,7 +24,7 @@ class App extends Component {
         </header>
         <div className="flex-center">
         <SearchBar onSearchChange = {this.onSearchChange}/>
-        <BoardGames />
+        <BoardGames searchStatus = {this.onSearchChange}/>
                 {/*
         <boardgame-stats />
         < expansions />
