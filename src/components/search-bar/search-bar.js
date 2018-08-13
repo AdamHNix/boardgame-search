@@ -1,14 +1,18 @@
 import React from 'react';
 import './search-bar.css';
 
-const SearchBar = ({onSearchChange}) => {
+const SearchBar = ({onSearchChange, onButtonSubmit}) => {
     return (
-        <div className = ''>
+        <div>
         <input 
-        id="search"
+        id='search'
         type = 'search' 
         placeholder = 'Search Boardgames'
         onChange={onSearchChange}
+        />
+        <button
+        id = 'submit-btn'
+        onClick = {onButtonSubmit}
         />
         </div>
     );
