@@ -11,7 +11,6 @@ class App extends Component {
       this.state = {
         searchfield: '',
         games: [],
-        gameImage: ''
       }
     }
     onButtonSubmit = (event) => {
@@ -30,20 +29,19 @@ class App extends Component {
          (JSON.stringify(result));
          console.log(result)
         let games = []
-        let i = 0;
-        Object.values(result.items.item).forEach(game => {
+        // loops through first 10 or less games that come up in fetch
+        for(let game = 1; (game<10 && game<result.items.item.length);game++) {
+          let gameObj=Object.values(result.items.item[game])
+          console.log(gameObj)
           games.push(
-            { id:game.$.id,
-              name: game.name[0].$.value,
+            { id:gameObj[0].id,
+              name: gameObj[1][0].$.value,
               image: ''
             }
           )
-          i++
-          if (i>5){
-            return;
-          }
-        }
-        );
+          console.log(game)
+          console.log(games)
+        };
         Object.values(games).map(obj =>
           fetch(`https://boardgamegeek.com/xmlapi2/thing?id=${obj.id}`)
           .then(response => response.text())
@@ -59,26 +57,23 @@ class App extends Component {
               obj.image = getPic;
               })
               this.setState({games: games})
-              console.log(this.state.games)
             }
            )
           )
       return jsonData;
         })})}
-
+//tracks what is in searchbox
   onSearchChange = (event) => {
     this.setState({ searchfield: event.target.value})
-    console.log(this.state.searchfield)
   }
-  
   render() {
     return (
-      <div className="flex-col flex-center">
-        <header className="flex-center">
-          <h1 className="">Search for a Boardgame!</h1>
+      <div className="flex-center">
+        <header className = 'flex-center'>
+          <h1>Search for a Boardgame!</h1>
         </header>
         <div className="flex-center">
-        <SearchBar onSearchChange = {this.onSearchChange} onButtonSubmit = {this.onButtonSubmit}/>
+        <SearchBar className="flex-center" onSearchChange = {this.onSearchChange} onButtonSubmit = {this.onButtonSubmit}/>
         <BoardGameImage  className = "flex-center" games = {this.state.games}/>
          {/*
         <boardgame-stats />
