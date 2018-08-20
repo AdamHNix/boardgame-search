@@ -1,5 +1,6 @@
 {
   "name": "boardgame-search",
+  "homepage": "https://github.com/AdamHNix/boardgame-search.git",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -10,6 +11,8 @@
     "xml2js": "^0.4.19"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
@@ -19,6 +22,7 @@
     "eslint": "^5.4.0",
     "eslint-config-prettier": "^3.0.1",
     "eslint-plugin-prettier": "^2.6.2",
+    "gh-pages": "^1.2.0",
     "prettier": "^1.14.2"
   }
 }

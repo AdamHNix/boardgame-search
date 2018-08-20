@@ -1,3 +1,7 @@
+div #sorry {
+    font-size: 30px;
+}
+
 img {
     width: 300px;
     height: 300px;
@@ -11,6 +15,21 @@ img {
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     border-radius: 20px;
     margin: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    transition: 80ms;
+}
+
+a:hover {
+    opacity: 0.9;
+    transform: scale(1.02)
+}
+
+h3 {
+    max-width: 350px;
 }
 
 .flex-center {
@@ -34,4 +53,8 @@ img {
 
 :focus {
     outline: none;
+}
+
+h4 {
+    font-size: 14px;
 }
