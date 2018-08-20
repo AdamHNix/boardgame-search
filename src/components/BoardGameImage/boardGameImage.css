@@ -1,29 +1,37 @@
-img{
+img {
     width: 300px;
     height: 300px;
     border-color: none;
     padding: 40px;
-    background: #DAE2F8;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #D6A4A4, #DAE2F8);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #D6A4A4, #DAE2F8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #DAE2F8;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #D6A4A4, #DAE2F8);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #D6A4A4, #DAE2F8);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     border-radius: 20px;
     margin: 20px;
 }
-.flex-center{
+
+.flex-center {
     display: flex;
     justify-content: center;
     flex-direction: column;
     margin: 0 auto;
 }
-.flex-row{
+
+.flex-row {
     display: flex;
     justify-content: center;
     flex-direction: row;
     margin: 0 auto;
     flex-wrap: wrap;
 }
-.shadow-5 { box-shadow: 4px 4px 8px 0px rgba( 0, 0, 0, 0.2 ); }
 
-:focus{
-outline: none;
+.shadow-5 {
+    box-shadow: 4px 4px 8px 0px rgba( 0, 0, 0, 0.2);
+}
+
+:focus {
+    outline: none;
 }

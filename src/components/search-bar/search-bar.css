@@ -1,29 +1,36 @@
-#search{
+#search {
     padding: 0.2rem;
     width: 25rem;
 }
-#search-and-button{
+
+#search-and-button {
     margin: 0 auto;
 }
+
 input {
-border: none;
-border-radius: 20px;
-background-color: #80ced6;
-margin: 0 auto;
-height: 60px;
-font-size: 20px;
-margin-right: 20px;
-}
-button{
+    border: none;
+    border-radius: 20px;
+    background-color: #80ced6;
+    margin: 0 auto;
     height: 60px;
-    padding:20px;
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+button {
+    height: 60px;
+    padding: 20px;
     cursor: pointer;
     border: none;
     border-radius: 20px;
     background-color: #80ced6;
     transition: 0.2s;
 }
-button:hover{
+
+button:hover {
     transform: scale(1.2);
 }
-.shadow-5 { box-shadow: 4px 4px 8px 0px rgba( 0, 0, 0, 0.2 ); }
+
+.shadow-5 {
+    box-shadow: 4px 4px 8px 0px rgba( 0, 0, 0, 0.2);
+}
