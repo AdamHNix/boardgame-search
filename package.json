@@ -1,6 +1,6 @@
 {
   "name": "boardgame-search",
-  "homepage": "https://github.com/AdamHNix/boardgame-search.git",
+  "homepage": "https://github.com/AdamHNix/boardgame-search/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
