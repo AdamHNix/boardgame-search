@@ -3,18 +3,25 @@
     width: 25rem;
 }
 
-#search-and-button {
-    margin: 0 auto;
+div#search-and-button {
+    display: flex;
+    justify-content: center;
 }
 
 input {
     border: none;
     border-radius: 20px;
     background-color: #80ced6;
-    margin: 0 auto;
     height: 60px;
     font-size: 20px;
-    margin-right: 20px;
+    margin: 15px;
+}
+
+@media screen and (max-width: 480px) {
+    input {
+        max-width: 200px;
+        font-size: 15px;
+    }
 }
 
 button {
@@ -25,6 +32,7 @@ button {
     border-radius: 20px;
     background-color: #80ced6;
     transition: 0.2s;
+    margin: 15px;
 }
 
 button:hover {

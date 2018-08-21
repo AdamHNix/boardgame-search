@@ -14,9 +14,7 @@ const SearchBar = ({ onSearchChange, onButtonSubmit }) => {
       <button id="submit-btn" onClick={onButtonSubmit} className="shadow-5">
         SEARCH
       </button>
-      <div>
-        <h2>Use "QUOTES" to search for exact phrases</h2>
-      </div>
+      <div />
     </div>
   );
 };

@@ -25,13 +25,20 @@ class App extends Component {
       console.log(link);
     }
     fetch(link)
-      .then(response => response.text())
+      .then(response => {
+        if (!response.ok) {
+          throw response;
+        }
+        return response.text();
+      })
       //convert xml to JSON
       .then(data => {
         let jsonData = parseString(data, (err, result) => {
           let games = [];
           if (err) {
-            console.log("ERROR converting XML!");
+            games = ["ERROR: Could not parse BGG XML to JSON"];
+            this.setState({ games: games });
+            return true;
           }
           JSON.stringify(result);
           //sets object to array of lower compoents (items)
@@ -43,26 +50,20 @@ class App extends Component {
           result = Object.values(result.items.item).filter(gametype => {
             return gametype.$.type === "boardgame";
           });
-          console.log("total games", result.length);
-          // loops through first 10 or less games that come up in fetch
+          // loops through first 50 or less games that come up in fetch
           for (let game = 0; game < 50 && game < result.length; game++) {
             let gameObj = Object.values(result[game]);
-            console.log("game object", gameObj);
-            console.log("current game", game);
-            console.log("full game array", games);
-            console.log("next");
+            //pushes each game id and name into games array
             games.push({
               id: gameObj[0].id,
               name: gameObj[1][0].$.value,
               image: ""
             });
-            console.log("Finished push");
           }
           //second fetch to obtain all stats on each boardgame
           games = Object.values(games).map(obj => (obj = obj.id));
           console.log(games);
           let stringGames = games.join(",");
-          console.log(stringGames);
           fetch(
             `https://boardgamegeek.com/xmlapi2/thing?id=${stringGames}&stats=1`
           )
@@ -73,14 +74,15 @@ class App extends Component {
                   console.log("ERROR converting XML!");
                 }
                 JSON.stringify(result);
-                console.log(result);
                 games = Object.values(result.items.item).map(game => {
                   let type = game.$.type;
+                  //marks all non-boardgames as null
                   if (type !== "boardgame") {
                     return (game = null);
                   }
                   return game;
                 });
+                //sorts games by popularity
                 games = Object.values(games).sort((a, b) => {
                   if (a === null) {
                     return true;
@@ -99,6 +101,12 @@ class App extends Component {
             });
           return jsonData;
         });
+      })
+      .catch(err => {
+        err.text().then(errorMessage => {
+          let gamesError = ["ERROR", `ERROR: ${errorMessage}`];
+          this.setState({ games: gamesError });
+        });
       });
   };
   //tracks what is in searchbox
@@ -108,20 +116,27 @@ class App extends Component {
   render() {
     return (
       <div className="flex-center">
-        <header className="flex-center">
-          <h1>Search for a Boardgame!</h1>
-        </header>
+        <div id="top" className="flex-across">
+          <header className="item-center">
+            <h1>boardgame search</h1>
+            <SearchBar
+              onSearchChange={this.onSearchChange}
+              onButtonSubmit={this.onButtonSubmit}
+            />
+          </header>
+          <div id="tips" className="flex-center">
+            <div className="flex-center">
+              <p>Things to know</p>
+              <p>Use "quotes" to search exact phrases (e.g. "agricola")</p>
+              <p>
+                This website sorts searches by popular vote using BoardGameGeek
+                XML API2
+              </p>
+            </div>
+          </div>
+        </div>
         <div className="flex-center">
-          <SearchBar
-            className="flex-center"
-            onSearchChange={this.onSearchChange}
-            onButtonSubmit={this.onButtonSubmit}
-          />
           <BoardGameImage className="flex-center" games={this.state.games} />
-          {/*
-        <boardgame-stats />
-        <expansions />
-          */}
         </div>
       </div>
     );

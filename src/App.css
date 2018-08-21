@@ -1,3 +1,7 @@
+html, body {
+  overflow-x: hidden;
+}
+
 body {
   background: #FF0099;
   /* fallback for old browsers */
@@ -12,9 +16,57 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin: 0 auto;
+  flex-wrap: wrap;
 }
 
-SearchBar {
-  margin: 60px;
+.flex-across {
+  justify-content: flex-start;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.item-center {
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.flex-right {
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  max-width: 200px;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+@font-face {
+  font-family: 'namco regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('namco regular'), url('namco__.woff') format('woff');
+}
+
+h1 {
+  font-family: 'namco regular';
+  border-bottom: black solid 4px;
+  padding-bottom: 10px;
+}
+
+div#tips {
+  margin-top: 200px;
+  max-width: 200px;
+  font-size: 15px;
+  height: 200px;
+  padding: 20px;
+  background-color: rgba(100, 0, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 4px 4px 8px 0px rgba( 0, 0, 0, 0.2);
+}
+
+div#tips p:first-child {
+  display: flex;
+  justify-content: center;
+  border-bottom: dashed 1px black
 }
