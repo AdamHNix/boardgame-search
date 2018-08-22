@@ -136,7 +136,11 @@ class App extends Component {
           </div>
         </div>
         <div className="flex-center">
-          <BoardGameImage className="flex-center" games={this.state.games} />
+          <BoardGameImage
+            className="flex-center"
+            games={this.state.games}
+            loading={this.state.loading}
+          />
         </div>
       </div>
     );

@@ -20,12 +20,10 @@ img {
 a {
     text-decoration: none;
     color: black;
-    transition: 80ms;
 }
 
 a:hover {
-    opacity: 0.9;
-    transform: scale(1.02)
+    opacity: 0.5;
 }
 
 h3 {

@@ -51,7 +51,13 @@ body {
 h1 {
   font-family: 'namco regular';
   border-bottom: black solid 4px;
-  padding-bottom: 10px;
+}
+
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: 20px;
+    ;
+  }
 }
 
 div#tips {

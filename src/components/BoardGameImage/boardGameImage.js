@@ -1,7 +1,7 @@
 import React from "react";
 import "./boardGameImage.css";
 
-const BoardGameImage = ({ games }) => {
+const BoardGameImage = ({ games, loading }) => {
   if (games[0] === "ERROR") {
     return (
       <div id="error">
