@@ -6,6 +6,7 @@
 div#search-and-button {
     display: flex;
     justify-content: center;
+    flex: wrap;
 }
 
 input {

@@ -1,7 +1,7 @@
 import React from "react";
 import "./boardGameImage.css";
 
-const BoardGameImage = ({ games, loading }) => {
+const BoardGameImage = ({ games }) => {
   if (games[0] === "ERROR") {
     return (
       <div id="error">
@@ -25,21 +25,25 @@ const BoardGameImage = ({ games, loading }) => {
           }
           let link = "https://boardgamegeek.com/boardgame/" + game.$.id;
           return (
-            <a href={link} target="_blank">
-              <div className="flex-center games-searched">
-                <img
-                  className="shadow-5"
-                  key={game + "image"}
-                  id="game-img"
-                  alt="unavailable"
-                  src={game.image[0]}
-                />
-                <h3 key={game + "name"} className="flex-center">
-                  {game.name[0].$.value}
-                </h3>
-                <h4 className="flex-center">{game.yearpublished[0].$.value}</h4>
-              </div>
-            </a>
+            <div key={game.$.id}>
+              <a href={link} target="_blank">
+                <div className="flex-center games-searched">
+                  <img
+                    className="shadow-5"
+                    key={game.image[0]}
+                    id="game-img"
+                    alt="unavailable"
+                    src={game.image[0]}
+                  />
+                  <h3 key={game.name[0].$.value} className="flex-center">
+                    {game.name[0].$.value}
+                  </h3>
+                  <h4 className="flex-center">
+                    {game.yearpublished[0].$.value}
+                  </h4>
+                </div>
+              </a>
+            </div>
           );
         })}
       </div>

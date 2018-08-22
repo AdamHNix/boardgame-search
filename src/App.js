@@ -16,13 +16,10 @@ class App extends Component {
   onButtonSubmit = () => {
     let searchValue = this.state.searchfield;
     this.setState({ search: searchValue });
-    console.log(searchValue);
     let link = `https://www.boardgamegeek.com/xmlapi2/search?type=boardgame&query=${searchValue}`;
     if (searchValue.startsWith('"') && searchValue.endsWith('"')) {
-      console.log("exact Search");
       searchValue = searchValue.replace(/["]/g, "");
       link = `https://www.boardgamegeek.com/xmlapi2/search?type=boardgame&query=${searchValue}&exact=1`;
-      console.log(link);
     }
     fetch(link)
       .then(response => {
@@ -62,7 +59,6 @@ class App extends Component {
           }
           //second fetch to obtain all stats on each boardgame
           games = Object.values(games).map(obj => (obj = obj.id));
-          console.log(games);
           let stringGames = games.join(",");
           fetch(
             `https://boardgamegeek.com/xmlapi2/thing?id=${stringGames}&stats=1`
@@ -94,10 +90,8 @@ class App extends Component {
                   let bPop = b.statistics[0].ratings[0].usersrated[0].$.value;
                   return bPop - aPop;
                 });
-                console.log(games);
               });
               this.setState({ games: games });
-              console.log(games);
             });
           return jsonData;
         });
