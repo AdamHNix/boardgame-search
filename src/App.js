@@ -16,6 +16,7 @@ class App extends Component {
   onButtonSubmit = () => {
     let searchValue = this.state.searchfield;
     this.setState({ search: searchValue });
+    // let proxyURL = "https://crossorigin.me/";
     let link = `https://www.boardgamegeek.com/xmlapi2/search?type=boardgame&query=${searchValue}`;
     if (searchValue.startsWith('"') && searchValue.endsWith('"')) {
       searchValue = searchValue.replace(/["]/g, "");
@@ -32,6 +33,7 @@ class App extends Component {
       .then(data => {
         let jsonData = parseString(data, (err, result) => {
           let games = [];
+          console.log("HELLO");
           if (err) {
             games = ["ERROR: Could not parse BGG XML to JSON"];
             this.setState({ games: games });
@@ -70,6 +72,7 @@ class App extends Component {
                   console.log("ERROR converting XML!");
                 }
                 JSON.stringify(result);
+                console.log(result);
                 games = Object.values(result.items.item).map(game => {
                   let type = game.$.type;
                   //marks all non-boardgames as null
@@ -96,11 +99,10 @@ class App extends Component {
           return jsonData;
         });
       })
-      .catch(err => {
-        err.text().then(errorMessage => {
-          let gamesError = ["ERROR", `ERROR: ${errorMessage}`];
-          this.setState({ games: gamesError });
-        });
+      .catch(err => err.text())
+      .then(errorMessage => {
+        let gamesError = ["ERROR", `ERROR: ${toString(errorMessage)}`];
+        this.setState({ games: gamesError });
       });
   };
   //tracks what is in searchbox
