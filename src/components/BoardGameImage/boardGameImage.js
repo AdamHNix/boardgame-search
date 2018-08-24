@@ -1,13 +1,30 @@
 import React from "react";
 import "./boardGameImage.css";
 
-const BoardGameImage = ({ games }) => {
-  if (games[0] === "ERROR") {
+const BoardGameImage = ({ games, loading, count }) => {
+  if (loading) {
     return (
-      <div id="error">
-        <h2 className="flex-center">{games[0]}</h2>
+      <div>
+        <h2>LOADING...</h2>
       </div>
     );
+  } else if (games[0] === "ERROR") {
+    // temoporary fix for loading issues...
+    if (count <= 1) {
+      return null;
+    } else if (loading) {
+      return (
+        <div>
+          <h2>LOADING...</h2>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <h2>{games[1]}</h2>
+        </div>
+      );
+    }
   } else if (games[0] === "Sorry, I couldn't find anything...") {
     return (
       <div id="sorry">

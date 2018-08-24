@@ -3,17 +3,36 @@ import "./App.css";
 import SearchBar from "./components/search-bar/search-bar.js";
 import BoardGameImage from "./components/BoardGameImage/boardGameImage.js";
 import xml2js from "xml2js";
-
 const parseString = xml2js.parseString;
+
 class App extends Component {
   constructor() {
     super();
     this.state = {
       searchfield: "",
-      games: []
+      gameIDs: "",
+      games: [],
+      loading: true,
+      count: 0
     };
   }
+  //tracks what is in searchbox
+  onSearchChange = event => {
+    this.setState({ searchfield: event.target.value });
+    setTimeout(() => this.setState({ loading: false }), 1500);
+  };
+  componentDidMount() {
+    this.onButtonSubmit();
+    this.setState({ loading: false });
+  }
   onButtonSubmit = () => {
+    this.setState({ loading: true });
+    let count = 0;
+    count++;
+    console.log(count);
+    this.setState({ count: count });
+    // this.setState({ loading: true });
+    console.log("loading?", this.state.loading);
     let searchValue = this.state.searchfield;
     this.setState({ search: searchValue });
     // let proxyURL = "https://crossorigin.me/";
@@ -62,40 +81,9 @@ class App extends Component {
           //second fetch to obtain all stats on each boardgame
           games = Object.values(games).map(obj => (obj = obj.id));
           let stringGames = games.join(",");
-          fetch(
-            `https://boardgamegeek.com/xmlapi2/thing?id=${stringGames}&stats=1`
-          )
-            .then(response => response.text())
-            .then(data => {
-              parseString(data, (err, result) => {
-                if (err) {
-                  console.log("ERROR converting XML!");
-                }
-                JSON.stringify(result);
-                console.log(result);
-                games = Object.values(result.items.item).map(game => {
-                  let type = game.$.type;
-                  //marks all non-boardgames as null
-                  if (type !== "boardgame") {
-                    return (game = null);
-                  }
-                  return game;
-                });
-                //sorts games by popularity
-                games = Object.values(games).sort((a, b) => {
-                  if (a === null) {
-                    return true;
-                  }
-                  if (b === null) {
-                    return true;
-                  }
-                  let aPop = a.statistics[0].ratings[0].usersrated[0].$.value;
-                  let bPop = b.statistics[0].ratings[0].usersrated[0].$.value;
-                  return bPop - aPop;
-                });
-              });
-              this.setState({ games: games });
-            });
+          console.log(stringGames);
+          this.setState({ gameIDs: stringGames });
+          this.afterButtonFetch();
           return jsonData;
         });
       })
@@ -105,11 +93,68 @@ class App extends Component {
         this.setState({ games: gamesError });
       });
   };
-  //tracks what is in searchbox
-  onSearchChange = event => {
-    this.setState({ searchfield: event.target.value });
+
+  afterButtonFetch = () => {
+    console.log(this.state.gameIDs);
+    fetch(
+      `https://boardgamegeek.com/xmlapi2/thing?id=${this.state.gameIDs}&stats=1`
+    )
+      .then(response => {
+        if (!response.ok) {
+          throw response;
+        }
+        console.log(response);
+        return response;
+      })
+      .then(response => response.text())
+      .then(data => {
+        parseString(data, (err, result) => {
+          if (err) {
+            console.log("ERROR converting XML!");
+          }
+          JSON.stringify(result);
+          console.log(result);
+          let games = Object.values(result.items.item).map(game => {
+            let type = game.$.type;
+            //marks all non-boardgames as null
+            if (type !== "boardgame") {
+              return (game = null);
+            }
+            return game;
+          });
+          //sorts games by popularity
+          games = Object.values(games).sort((a, b) => {
+            if (a === null) {
+              return true;
+            }
+            if (b === null) {
+              return true;
+            }
+            let aPop = a.statistics[0].ratings[0].usersrated[0].$.value;
+            let bPop = b.statistics[0].ratings[0].usersrated[0].$.value;
+            return bPop - aPop;
+          });
+          // this.setState({ loading: false });
+          this.setState({ games: games });
+        });
+      });
+    // .catch(err => err.text())
+    // .then(errorMessage => {
+    //   let gamesError = ["ERROR", `ERROR: ${toString(errorMessage)}`];
+    //   this.setState({ games: gamesError });
+    // });
   };
   render() {
+    // boardGameImage;
+    // if (this.onButtonSubmit()) {
+    //   boardGameImage = (
+    //     <BoardGameImage
+    //       className="flex-center"
+    //       onSearchChange={this.onSearchChange}
+    //       onButtonSubmit={this.onButtonSubmit}
+    //     />
+    //   );
+    // }
     return (
       <div className="flex-center">
         <div id="top" className="flex-across">
@@ -132,10 +177,12 @@ class App extends Component {
           </div>
         </div>
         <div className="flex-center">
+          {" "}
           <BoardGameImage
             className="flex-center"
             games={this.state.games}
             loading={this.state.loading}
+            count={this.state.count}
           />
         </div>
       </div>
