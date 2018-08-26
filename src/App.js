@@ -173,6 +173,7 @@ class App extends Component {
                 This website sorts searches by popular vote using BoardGameGeek
                 XML API2
               </p>
+              <p>The search can take a while to load... So be patient!</p>
             </div>
           </div>
         </div>

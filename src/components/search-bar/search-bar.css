@@ -1,3 +1,7 @@
+html, body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 #search {
     padding: 0.2rem;
     width: 25rem;
@@ -16,6 +20,7 @@ input {
     height: 60px;
     font-size: 20px;
     margin: 15px;
+    opacity: 0.85;
 }
 
 @media screen and (max-width: 600px) {
@@ -34,6 +39,7 @@ button {
     background-color: #80ced6;
     transition: 0.2s;
     margin: 15px;
+    opacity: 0.85;
 }
 
 button:hover {
