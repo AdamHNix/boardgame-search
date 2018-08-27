@@ -19,23 +19,20 @@ class App extends Component {
   //tracks what is in searchbox
   onSearchChange = event => {
     this.setState({ searchfield: event.target.value });
-    setTimeout(() => this.setState({ loading: false }), 1500);
+    if (event.which === 13) {
+      console.log("working");
+      this.onButtonSubmit();
+    }
   };
   componentDidMount() {
-    this.onButtonSubmit();
-    this.setState({ loading: false });
+    setTimeout(this.onButtonSubmit(), 5000);
   }
   onButtonSubmit = () => {
+    console.log("hi!");
     this.setState({ loading: true });
-    let count = 0;
-    count++;
-    console.log(count);
-    this.setState({ count: count });
-    // this.setState({ loading: true });
-    console.log("loading?", this.state.loading);
+    this.setState({ count: this.state.count + 1 });
     let searchValue = this.state.searchfield;
     this.setState({ search: searchValue });
-    // let proxyURL = "https://crossorigin.me/";
     let link = `https://www.boardgamegeek.com/xmlapi2/search?type=boardgame&query=${searchValue}`;
     if (searchValue.startsWith('"') && searchValue.endsWith('"')) {
       searchValue = searchValue.replace(/["]/g, "");
@@ -44,6 +41,7 @@ class App extends Component {
     fetch(link)
       .then(response => {
         if (!response.ok) {
+          console.log("ERROR", response);
           throw response;
         }
         return response.text();
@@ -52,7 +50,6 @@ class App extends Component {
       .then(data => {
         let jsonData = parseString(data, (err, result) => {
           let games = [];
-          console.log("HELLO");
           if (err) {
             games = ["ERROR: Could not parse BGG XML to JSON"];
             this.setState({ games: games });
@@ -81,9 +78,9 @@ class App extends Component {
           //second fetch to obtain all stats on each boardgame
           games = Object.values(games).map(obj => (obj = obj.id));
           let stringGames = games.join(",");
-          console.log(stringGames);
           this.setState({ gameIDs: stringGames });
           this.afterButtonFetch();
+          this.setState({ loading: false });
           return jsonData;
         });
       })
@@ -95,15 +92,14 @@ class App extends Component {
   };
 
   afterButtonFetch = () => {
-    console.log(this.state.gameIDs);
     fetch(
       `https://boardgamegeek.com/xmlapi2/thing?id=${this.state.gameIDs}&stats=1`
     )
       .then(response => {
         if (!response.ok) {
+          console.log("ERROR", response);
           throw response;
         }
-        console.log(response);
         return response;
       })
       .then(response => response.text())
@@ -113,7 +109,6 @@ class App extends Component {
             console.log("ERROR converting XML!");
           }
           JSON.stringify(result);
-          console.log(result);
           let games = Object.values(result.items.item).map(game => {
             let type = game.$.type;
             //marks all non-boardgames as null

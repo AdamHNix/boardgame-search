@@ -14,15 +14,7 @@ img {
     width: 250px;
     height: 250px;
     border-color: none;
-    padding: 40px;
-    background: #DAE2F8;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #D6A4A4, #DAE2F8);
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #D6A4A4, #DAE2F8);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     border-radius: 20px;
-    margin: 20px;
 }
 
 a {
@@ -35,7 +27,7 @@ a:hover {
 }
 
 h3 {
-    max-width: 350px;
+    max-width: 250px;
 }
 
 .flex-center {
@@ -63,4 +55,27 @@ h3 {
 
 h4 {
     font-size: 14px;
+}
+
+.games-searched {
+    border-radius: 20px;
+    padding: 20px;
+    margin: 10px;
+    background: #DAE2F8;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #D6A4A4, #DAE2F8);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #D6A4A4, #DAE2F8);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    transition: 2000ms;
+    opacity: 0.95;
+}
+
+.games-searched:hover {
+    opacity: 0.90;
+    transform: scale(1.01)
+}
+
+.card-text {
+    margin-top: 15px;
 }

@@ -3,28 +3,32 @@ import "./boardGameImage.css";
 
 const BoardGameImage = ({ games, loading, count }) => {
   if (loading) {
-    return (
-      <div>
-        <h2>LOADING...</h2>
-      </div>
-    );
-  } else if (games[0] === "ERROR") {
-    // temoporary fix for loading issues...
     if (count <= 1) {
       return null;
-    } else if (loading) {
+    } else {
       return (
         <div>
           <h2>LOADING...</h2>
         </div>
       );
-    } else {
-      return (
-        <div>
-          <h2>{games[1]}</h2>
-        </div>
-      );
     }
+  }
+  if (games[0] === "ERROR") {
+    //blank page on error.
+    if (count <= 1) {
+      return null;
+    } else {
+      console.log("error:", games);
+      return null;
+    }
+    //error bar coming up every time games load..
+    // else {
+    //   return (
+    //     <div>
+    //       <h2>{games[1]}</h2>
+    //     </div>
+    //   );
+    // }
   } else if (games[0] === "Sorry, I couldn't find anything...") {
     return (
       <div id="sorry">
@@ -44,7 +48,7 @@ const BoardGameImage = ({ games, loading, count }) => {
           return (
             <div key={game.$.id}>
               <a href={link} target="_blank">
-                <div className="flex-center games-searched">
+                <div className="flex-center games-searched shadow-5">
                   <img
                     className="shadow-5"
                     key={game.image[0]}
@@ -52,7 +56,10 @@ const BoardGameImage = ({ games, loading, count }) => {
                     alt="unavailable"
                     src={game.image[0]}
                   />
-                  <h3 key={game.name[0].$.value} className="flex-center">
+                  <h3
+                    key={game.name[0].$.value}
+                    className="flex-center card-text"
+                  >
                     {game.name[0].$.value}
                   </h3>
                   <h4 className="flex-center">
