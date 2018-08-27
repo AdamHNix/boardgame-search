@@ -12,8 +12,7 @@ const BoardGameImage = ({ games, loading, count }) => {
         </div>
       );
     }
-  }
-  if (games[0] === "ERROR") {
+  } else if (games[0] === "ERROR") {
     //blank page on error.
     if (count <= 1) {
       return null;
@@ -30,9 +29,10 @@ const BoardGameImage = ({ games, loading, count }) => {
     //   );
     // }
   } else if (games[0] === "Sorry, I couldn't find anything...") {
+    console.log("in elseif", games);
     return (
       <div id="sorry">
-        <h2 className="flex-center">{games[0]}</h2>
+        <h2 className="flex-center">Sorry, I couldn't find anything...</h2>
       </div>
     );
   } else {

@@ -19,10 +19,6 @@ class App extends Component {
   //tracks what is in searchbox
   onSearchChange = event => {
     this.setState({ searchfield: event.target.value });
-    if (event.which === 13) {
-      console.log("working");
-      this.onButtonSubmit();
-    }
   };
   componentDidMount() {
     setTimeout(this.onButtonSubmit(), 5000);
@@ -53,6 +49,7 @@ class App extends Component {
           if (err) {
             games = ["ERROR: Could not parse BGG XML to JSON"];
             this.setState({ games: games });
+            this.setState({ loading: false });
             return true;
           }
           JSON.stringify(result);
@@ -60,6 +57,8 @@ class App extends Component {
           if (result.items.$.total === "0") {
             games = ["Sorry, I couldn't find anything..."];
             this.setState({ games: games });
+            console.log(games);
+            this.setState({ loading: false });
             return true;
           }
           result = Object.values(result.items.item).filter(gametype => {
@@ -86,6 +85,7 @@ class App extends Component {
       })
       .catch(err => err.text())
       .then(errorMessage => {
+        console.dir(errorMessage);
         let gamesError = ["ERROR", `ERROR: ${toString(errorMessage)}`];
         this.setState({ games: gamesError });
       });
